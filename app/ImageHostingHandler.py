@@ -18,7 +18,7 @@ class ImageHostingHandler(AdvancedHTTPRequestHandler):
         super().__init__(request, client_address, server)
 
     def do_GET(self):
-        path = self.path.rstrip('/')  # Нормализация пути
+        path = self.path.rstrip('/')
         logger.debug(f"Processing GET: {path}")
 
         if path == '/api/images':
@@ -28,7 +28,7 @@ class ImageHostingHandler(AdvancedHTTPRequestHandler):
         super().do_GET()
 
     def do_POST(self):
-        path = self.path.rstrip('/')  # Нормализация пути
+        path = self.path.rstrip('/')
         logger.debug(f"Processing POST: {path}")
 
         if path == '/upload':
@@ -38,11 +38,11 @@ class ImageHostingHandler(AdvancedHTTPRequestHandler):
         super().do_POST()
 
     def do_DELETE(self):
-        path = self.path.rstrip('/')  # Нормализация пути
+        path = self.path.rstrip('/')
         logger.debug(f"Processing DELETE: {path}")
 
         if path.startswith('/api/delete/'):
-            image_id = path.split('/')[-1]  # Извлекаем ID изображения из URL
+            image_id = path.split('/')[-1]
             return self.delete_image(image_id)
 
         logger.warning(f"No DELETE handler for path: {path}")
@@ -141,7 +141,6 @@ class ImageHostingHandler(AdvancedHTTPRequestHandler):
             self.send_html(ERROR_FILE, 500)
 
 
-# Настройка логирования
 logger.add("logs/image_hosting.log",
            rotation="10 MB",
            format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
